@@ -36,6 +36,7 @@ class AVL:
                     
                     curent = curent.left
     
+    
     def is_balanced(self):
         for node in self.nodes:
             if node.get_balance() not in [-1, 0, 1]:
@@ -84,6 +85,46 @@ class AVL:
 
 
 
+    # node is the anchor of rotation
+    # a
+    #  \
+    #   b
+    #    \
+    #     c
+    def right_right(self, a:Node):
+        
+        b = a.right
+
+        if a == self.root:
+            self.root = b
+        
+        a.right = b.left if b else None
+
+        b.left = a
+
+
+
+    # node is the anchor of rotation
+    #    a
+    #     \
+    #      b
+    #     /
+    #    c
+    def right_left(self, a:Node):
+
+        b = a.right
+        c = b.left
+
+        a.right = c.left
+        b.left = c.right
+
+        c.left = a
+        c.right = b
+
+        if a == self.root:
+            self.root = c
+
+
     def display(self):
         for node in self.nodes:
             print(node, "- left:", node.left, '- right:', node.right)
@@ -91,18 +132,19 @@ class AVL:
 
 tree = AVL()
 
-# tree.insert(Node(5))
-# tree.insert(Node(3))
-tree.insert(Node(4))
 tree.insert(Node(2))
-tree.insert(Node(1))
+tree.insert(Node(5))
+tree.insert(Node(3))
+# tree.insert(Node(6))
+# tree.insert(Node(2))
+# tree.insert(Node(1))
 
 # tree.insert(Node(3))
 
 tree.display()
 print(tree.is_balanced())   
 
-tree.left_left(tree.nodes[0])
+tree.right_left(tree.nodes[0])
 tree.display()
 print(tree.is_balanced())   
 
