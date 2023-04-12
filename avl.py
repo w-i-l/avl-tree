@@ -1,4 +1,5 @@
 from node import Node
+from math import log2, ceil
 
 class AVL:
 
@@ -255,3 +256,58 @@ class AVL:
             print(f"{str(node).ljust(just//2)} - left: {str(node.left).ljust(just)} - right: {str(node.right).ljust(just)} - parent: {str(node.parent).ljust(just)} - balance: {str(node.get_balance()).ljust(just)}")
 
         print()
+
+    
+    def display_tree(self):
+        
+        nodes = [self.root]
+        print(str(self.root).rjust(len(self.nodes) + 1))
+
+        index = ceil(log2(len(self.nodes))) - 1
+        last = 2**(index + 1)
+        alignment = len(str(self.nodes[3]))
+
+        while index != 0:
+            copy = []
+            for node in nodes:
+                if node:
+                    copy.append(node.left)
+                    copy.append(node.right)
+
+            nodes = copy
+
+            if set(nodes) != {None}:
+                
+                # last = 2**(index)
+                default = 2**(index)
+
+                # if default != 0:
+                #     print(" ", end= ' ')
+
+                # if last == 2:
+                #     last = 1
+
+                print(str(nodes[0]).rjust(default), end = ' ' * (last - len(str(nodes[0]))))
+
+                for i, node in enumerate(nodes[1:]):
+                    if node:
+                        print(str(node), end = ' ' *  max((last - len(str(node))), 1))
+                    else:
+                        print(".", end = ' ' * max((last-1), 2))
+                print()
+
+                last = default
+            else:
+                break
+            
+            index -= 1
+
+        copy = []
+        for node in nodes:
+            if node:
+                copy.append(node.left)
+                copy.append(node.right)
+
+                print(node.left if node.left else '-', node.right if node.right else '-', end= ' ')
+            else:
+                print('- -', end = ' ')

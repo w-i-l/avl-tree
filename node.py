@@ -63,3 +63,6 @@ class Node:
     def __eq__(self, other):
         if isinstance(other, Node):
             return self.key == other.key
+        
+    def __hash__(self):
+        return hash(self.key)
