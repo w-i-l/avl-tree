@@ -259,35 +259,36 @@ class AVL:
 
     
     def display_tree(self):
+
+        print()
         
         nodes = [self.root]
-        print(str(self.root).rjust(len(self.nodes) + 1))
+        print(str(self.root).rjust(len(self.nodes)))
 
         index = ceil(log2(len(self.nodes))) - 1
         last = 2**(index + 1)
         alignment = len(str(self.nodes[3]))
 
-        while index != 0:
+        while True:
             copy = []
             for node in nodes:
                 if node:
                     copy.append(node.left)
                     copy.append(node.right)
+                else:
+                    copy.append(None)
+                    copy.append(None)
 
             nodes = copy
 
             if set(nodes) != {None}:
                 
-                # last = 2**(index)
                 default = 2**(index)
 
-                # if default != 0:
-                #     print(" ", end= ' ')
-
-                # if last == 2:
-                #     last = 1
-
-                print(str(nodes[0]).rjust(default), end = ' ' * (last - len(str(nodes[0]))))
+                if nodes[0] != None:
+                    print(str(nodes[0]).rjust(default), end = ' ' * (last - len(str(nodes[0]))))
+                else:
+                    print('. '.rjust(default), end = ' ' * (last - 1))
 
                 for i, node in enumerate(nodes[1:]):
                     if node:
@@ -301,13 +302,25 @@ class AVL:
                 break
             
             index -= 1
+        
+        print()
+        print()
+    
+    
+    # returns True if the node is in tree
+    def search(self, node:Node):
 
-        copy = []
-        for node in nodes:
-            if node:
-                copy.append(node.left)
-                copy.append(node.right)
+        curent = self.root
 
-                print(node.left if node.left else '-', node.right if node.right else '-', end= ' ')
+        while curent != None:
+
+            if curent == node:
+                return True
+
+            if node < curent:
+                curent = curent.left
             else:
-                print('- -', end = ' ')
+                curent = curent.right 
+
+        return False
+    

@@ -11,3 +11,10 @@ if __name__ == "__main__":
 
     print(tree.is_balanced())   
     tree.display_tree()
+
+    # tree.insert(Node(18))
+    # tree.display_tree()
+    # tree.insert(Node(10))
+    # tree.display_tree()
+
+    print(tree.search(Node(11)))
