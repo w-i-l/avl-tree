@@ -18,10 +18,10 @@ class Node:
         right = 0
 
         if self.left != None:
-            left = self.left.get_height(count+1)
+            left = self.left._get_height(count+1)
         
         if self.right != None:
-            right = self.right.get_height(count+1)
+            right = self.right._get_height(count+1)
 
         return max(left, right)
             
@@ -31,14 +31,14 @@ class Node:
         if self.right == None and self.left == None:
             return 0
         
-        left = 0
-        right = 0
+        left = -1
+        right = -1
 
         if self.left != None:
-            left = self.left.get_height()
+            left = self.left._get_height()
         
         if self.right != None:
-            right = self.right.get_height()
+            right = self.right._get_height()
 
         return left - right
 
@@ -50,9 +50,13 @@ class Node:
     def __repr__(self):
         return str(self.key)
     
-    
+
     def __ge__(self, other):
         return self.key >= other.key
+
+    def __eq__(self, other):
+        if isinstance(other, Node):
+            return self.key == other.key
 
 # n0 = Node(0)
 # n1 = Node(1,n0)
