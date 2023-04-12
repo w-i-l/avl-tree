@@ -7,6 +7,7 @@ class Node:
         Node.index += 1
         self.left = left
         self.right = right
+        self.parent = None
 
     
     def _get_height(self, count=0):
@@ -52,20 +53,13 @@ class Node:
     
 
     def __ge__(self, other):
-        return self.key >= other.key
+        if isinstance(other, Node):
+            return self.key >= other.key
+    
+    def __lt__(self, other):
+        if isinstance(other, Node):
+            return self.key < other.key
 
     def __eq__(self, other):
         if isinstance(other, Node):
             return self.key == other.key
-
-# n0 = Node(0)
-# n1 = Node(1,n0)
-# n2 = Node(2,n1)
-# n3 = Node(3,n2)
-# n4 = Node(4)
-# n5 = Node(5,n3)
-# n6 = Node(6)
-# n7 = Node(7, n5, n4)
-# n8 = Node(8, n7, n6)
-
-# print(n4.get_balance())
