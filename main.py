@@ -16,5 +16,9 @@ if __name__ == "__main__":
     # tree.display_tree()
     # tree.insert(Node(10))
     # tree.display_tree()
+    # print(tree.is_balanced())   
 
-    print(tree.search(Node(11)))
+    # print(tree.nodes)
+    tree.remove(tree.nodes[1])
+    tree.display_tree()
+    tree.display()

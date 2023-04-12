@@ -66,6 +66,9 @@ class AVL:
         if result == True and isinstance(result, bool):
             return
         
+        # sort by the deeper node
+        result = sorted(result, key=lambda x: -x._get_height())
+
         for node in result:
             self.balance(node, node.left)
             self.balance(node, node.right)
@@ -306,7 +309,7 @@ class AVL:
         print()
         print()
     
-    
+
     # returns True if the node is in tree
     def search(self, node:Node):
 
@@ -324,3 +327,17 @@ class AVL:
 
         return False
     
+    
+    def _smallest_element(self):
+
+        curent = self.root
+
+        while True:
+
+            if curent.left != None:
+                curent = curent.left
+            else:
+                return curent
+
+
+
