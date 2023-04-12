@@ -49,6 +49,10 @@ class Node:
 
     def __repr__(self):
         return str(self.key)
+    
+    
+    def __ge__(self, other):
+        return self.key >= other.key
 
 # n0 = Node(0)
 # n1 = Node(1,n0)
