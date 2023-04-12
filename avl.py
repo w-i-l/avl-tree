@@ -45,18 +45,28 @@ class AVL:
 
 
     # node is the anchor of rotation
-    def left_left(self, node:Node):
+    #      a
+    #     /
+    #    b
+    #   /
+    #  c
+    def left_left(self, a:Node):
         
-        left_child = node.left
-        if node == self.root:
-            self.root = left_child
+        b = a.left
+        if a == self.root:
+            self.root = b
         
-        node.left = left_child.right if left_child else None
+        a.left = b.right if b else None
 
-        left_child.right = node
+        b.right = a
     
     
     # node is the anchor of rotation
+    #    a
+    #   /
+    #  b
+    #   \
+    #    c
     def left_right(self, a:Node):
         
         b = a.left
@@ -81,18 +91,18 @@ class AVL:
 
 tree = AVL()
 
-tree.insert(Node(5))
-tree.insert(Node(3))
+# tree.insert(Node(5))
+# tree.insert(Node(3))
 tree.insert(Node(4))
-# tree.insert(Node(2))
-# tree.insert(Node(1))
+tree.insert(Node(2))
+tree.insert(Node(1))
 
 # tree.insert(Node(3))
 
 tree.display()
 print(tree.is_balanced())   
 
-tree.left_right(tree.nodes[0])
+tree.left_left(tree.nodes[0])
 tree.display()
 print(tree.is_balanced())   
 
