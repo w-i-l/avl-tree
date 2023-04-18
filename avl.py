@@ -71,14 +71,15 @@ class AVL:
 
         for node in result:
             self.balance(node, node.left)
-            self.balance(node, node.right)
+            if self.is_balanced() != True:
+                self.balance(node, node.right)
 
 
     # reorder the tree from the inserted node
     def balance(self, parent:Node, curent:Node, node:Node = None):
 
 
-        if parent.get_balance() > 1:
+        if curent != None and parent.get_balance() > 1:
 
             # left-left
             if curent.get_balance() >= 1:
@@ -88,14 +89,16 @@ class AVL:
             elif curent.get_balance() <= -1:
                 self._left_right(parent)
 
-        elif parent.get_balance() < -1:
+        elif curent != None and parent.get_balance() < -1:
 
             # right-left
             if curent.get_balance() >= 1:
                 self._right_left(parent)
+
             #right-right
             elif curent.get_balance() <= -1:
                 self._right_right(parent)
+        
 
     
 
@@ -126,18 +129,24 @@ class AVL:
             self.root = b
             self.root.parent = None
         
-        a.left = b.right if b else None
+        a.left = b.right
+
         if b.right:
             b.right.parent = a
 
         b.right = a
-        b.parent = a.parent
 
+        # remember the parent
+        b.parent = a.parent
+        # update parent
         a.parent = b
 
         # we link the subgraph to its main graph
         if b.parent:
-            b.parent.left = b
+            if b.parent.left == a:
+                b.parent.left = b
+            elif b.parent.right == a:
+                b.parent.right = b
     
     
     # a is the anchor of rotation
@@ -172,7 +181,10 @@ class AVL:
 
         # we link the subgraph to its main graph
         if c.parent:
-            c.parent.left = c
+            if c.parent.left == a:
+                c.parent.left = c
+            elif c.parent.right == a:
+                c.parent.right = c
 
         if a == self.root:
             self.root = c
@@ -187,19 +199,19 @@ class AVL:
     #    \
     #     c
     def _right_right(self, a:Node):
-        
         b = a.right
 
         if a == self.root:
             self.root = b
             self.root.parent = None
         
-        a.right = b.left if b else None
+        a.right = b.left
 
         if b.left:
             b.left.parent = a
 
         b.left = a
+        
         # remember the parent
         b.parent = a.parent
         # update parent
@@ -207,7 +219,11 @@ class AVL:
 
         # we link the subgraph to its main graph
         if b.parent:
-            b.parent.right = b
+            if b.parent.right == a:
+                b.parent.right = b
+            elif b.parent.left == a:
+                b.parent.left = b
+        
 
 
     # a is the anchor of rotation
@@ -242,7 +258,10 @@ class AVL:
 
         # we link the subgraph to its main graph
         if c.parent:
-            c.parent.right = c
+            if c.parent.left == a:
+                c.parent.left = c
+            elif c.parent.right == a:
+                c.parent.right = c
 
         if a == self.root:
             self.root = c
@@ -263,6 +282,9 @@ class AVL:
     
     def display_tree(self):
 
+        if len(self.nodes) == 0:
+            return
+
         print()
         
         nodes = [self.root]
@@ -270,9 +292,9 @@ class AVL:
 
         index = ceil(log2(len(self.nodes))) - 1
         last = 2**(index + 1)
-        alignment = len(str(self.nodes[3]))
+        # alignment = len(str(self.nodes[3]))
 
-        while True:
+        while index >= 0:
             copy = []
             for node in nodes:
                 if node:
@@ -349,7 +371,7 @@ class AVL:
         
         # the node is not in tree
         if self.search(node) == False:
-            raise Exception("Node was not found")
+            raise ValueError("Node was not found")
         
         # leaf node
         if node.left == None and node.right == None and node.parent != None:
@@ -357,34 +379,74 @@ class AVL:
             # it's on the right side
             if node.parent.right == node:
                 node.parent.right = None
+
+                # we balance back
+                if node.parent.get_balance() not in [-1, 0, 1]:
+                    if node.parent.right:
+                        self._left_right(node.parent)
+                    elif node.parent.left:
+                        self._left_left(node.parent)
+
             # it's on the left side
             elif node.parent.left == node:
                 node.parent.left = None
-                    
+
+                # we balance back
+                if node.parent.get_balance() not in [-1, 0, 1]:
+                    if node.parent.right:
+                        self._right_right(node.parent)
+                    elif node.parent.left:
+                        self._right_left(node.parent)
+
+
         # only right or left subtree
         elif node.right == None or node.left == None:
             
+            # root node case
+            if node == self.root:
+                if node.right != None:
+                    self.root = node.right
+                    node.right.parent = None
+                elif node.left != None:
+                    self.root = node.left
+                    node.left.parent = None
+
             # it's on the right side
-            if node.parent.right == node:
+            elif node.parent.right == node:
                 # right subtree
                 if node.right != None:
+                    node.right.parent = node.parent
                     node.parent.right = node.right
+
                 #left subtree
                 elif node.left != None:
+                    node.left.parent = node.parent
                     node.parent.right = node.left
             
             # it's on the left side
             elif node.parent.left == node:
                 # right subtree
                 if node.right != None:
+                    node.right.parent = node.parent
                     node.parent.left = node.right
+
                 #left subtree
                 elif node.left != None:
+                    node.left.parent = node.parent
                     node.parent.left = node.left
+        
         
         # both subtrees
         elif node.right != None and node.left != None:
-            pass
+            
+            # get the smallest node from the right side
+            smallest = self._smallest_element(node.right)
+
+            node.key = smallest.key
+
+            self.remove(smallest)
 
         
+        self._final_balance()
         self.nodes.remove(node)
+
