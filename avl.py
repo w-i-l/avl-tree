@@ -328,9 +328,14 @@ class AVL:
         return False
     
     
-    def _smallest_element(self):
+    def _smallest_element(self, node:Node=None):
+        
+        curent = None
 
-        curent = self.root
+        if node == None:
+            curent = self.root
+        else:
+            curent = node
 
         while True:
 
@@ -340,4 +345,46 @@ class AVL:
                 return curent
 
 
+    def remove(self, node:Node):
+        
+        # the node is not in tree
+        if self.search(node) == False:
+            raise Exception("Node was not found")
+        
+        # leaf node
+        if node.left == None and node.right == None and node.parent != None:
+            
+            # it's on the right side
+            if node.parent.right == node:
+                node.parent.right = None
+            # it's on the left side
+            elif node.parent.left == node:
+                node.parent.left = None
+                    
+        # only right or left subtree
+        elif node.right == None or node.left == None:
+            
+            # it's on the right side
+            if node.parent.right == node:
+                # right subtree
+                if node.right != None:
+                    node.parent.right = node.right
+                #left subtree
+                elif node.left != None:
+                    node.parent.right = node.left
+            
+            # it's on the left side
+            elif node.parent.left == node:
+                # right subtree
+                if node.right != None:
+                    node.parent.left = node.right
+                #left subtree
+                elif node.left != None:
+                    node.parent.left = node.left
+        
+        # both subtrees
+        elif node.right != None and node.left != None:
+            pass
 
+        
+        self.nodes.remove(node)
