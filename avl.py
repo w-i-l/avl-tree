@@ -100,8 +100,6 @@ class AVL:
                 self._right_right(parent)
         
 
-    
-
     # returns True if yes
     # or a list with all unbalanced nodes
     def is_balanced(self):
@@ -191,7 +189,6 @@ class AVL:
             self.root.parent = None
 
 
-
     # a is the anchor of rotation
     # a
     #  \
@@ -224,7 +221,6 @@ class AVL:
             elif b.parent.left == a:
                 b.parent.left = b
         
-
 
     # a is the anchor of rotation
     #    a
@@ -350,7 +346,9 @@ class AVL:
         return False
     
     
-    def _smallest_element(self, node:Node=None):
+    # returns the smallest number compare to node
+    # by default uses the root
+    def smallest_element(self, node:Node=None):
         
         curent = None
 
@@ -363,6 +361,25 @@ class AVL:
 
             if curent.left != None:
                 curent = curent.left
+            else:
+                return curent
+
+
+    # returns the biggest number compare to node
+    # by default uses the root
+    def biggest_element(self, node:Node=None):
+        
+        curent = None
+
+        if node == None:
+            curent = self.root
+        else:
+            curent = node
+
+        while True:
+
+            if curent.right != None:
+                curent = curent.right
             else:
                 return curent
 
@@ -440,7 +457,7 @@ class AVL:
         elif node.right != None and node.left != None:
             
             # get the smallest node from the right side
-            smallest = self._smallest_element(node.right)
+            smallest = self.smallest_element(node.right)
 
             node.key = smallest.key
 
@@ -449,4 +466,5 @@ class AVL:
         
         self._final_balance()
         self.nodes.remove(node)
+
 
