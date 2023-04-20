@@ -59,6 +59,10 @@ class Node:
     def __lt__(self, other):
         if isinstance(other, Node):
             return self.key < other.key
+        
+    def __le__(self, other):
+        if isinstance(other, Node):
+            return self.key <= other.key
 
     def __eq__(self, other):
         if isinstance(other, Node):

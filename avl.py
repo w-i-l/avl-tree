@@ -284,10 +284,11 @@ class AVL:
         print()
         
         nodes = [self.root]
-        print(str(self.root).rjust(len(self.nodes)))
 
         index = ceil(log2(len(self.nodes))) - 1
         last = 2**(index + 1)
+
+        print(str(self.root).rjust(last))
         # alignment = len(str(self.nodes[3]))
 
         while index >= 0:
@@ -468,3 +469,38 @@ class AVL:
         self.nodes.remove(node)
 
 
+    def get_node(self, key:int):
+        
+        curent = self.root
+
+        while curent != None:
+
+            if curent.key == key:
+                return curent
+
+            if key < curent.key:
+                curent = curent.left
+            else:
+                curent = curent.right 
+
+        return None
+
+
+    def dfs(self, from_node:Node = None, nodes = []):
+        
+        curent_node = self.root
+
+        if from_node != None:
+            curent_node = from_node
+        
+
+        for node in [curent_node.left, curent_node.right]:
+
+            if curent_node not in nodes :
+                nodes.append(curent_node)
+
+
+            if node and node not in nodes:
+                self.dfs(node, nodes)
+
+        return nodes
