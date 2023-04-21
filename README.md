@@ -31,13 +31,11 @@
 
 <p>For a deeper understanding about AVL trees, but also beeing my references, I recommend watching this videos:</p>
 
-<a hreaf='https://www.youtube.com/watch?v=jDM6_TnYIqE&ab_channel=AbdulBari'>10.1 AVL Tree - Insertion and Rotations</a>
+<a href='https://www.youtube.com/watch?v=jDM6_TnYIqE&ab_channel=AbdulBari'>10.1 AVL Tree - Insertion and Rotations</a>
 
-<br/>
-<a hreaf='https://www.youtube.com/watch?v=vRwi_UcZGjU&ab_channel=BackToBackSWE'>AVL Trees & Rotations (Self-Balancing Binary Search Trees)</a>
+<a href='https://www.youtube.com/watch?v=vRwi_UcZGjU&ab_channel=BackToBackSWE'>AVL Trees & Rotations (Self-Balancing Binary Search Trees)</a>
 
-<br/> 
-<a hreaf='https://www.youtube.com/watch?v=kD_xn7mZ6v8&ab_channel=LalithaNatraj'>AVL Tree - Deletion</a> 
+<a href='https://www.youtube.com/watch?v=kD_xn7mZ6v8&ab_channel=LalithaNatraj'>AVL Tree - Deletion</a> 
 
 <p>Along with this article:</p><a href='https://www.geeksforgeeks.org/count-bst-nodes-that-are-in-a-given-range/'>Count BST nodes that lie in a given range</a>
 
