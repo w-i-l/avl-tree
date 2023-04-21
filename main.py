@@ -47,5 +47,5 @@ if __name__ == "__main__":
     if node1 > node2:
         node1, node2 = node2, node1
 
-    print(f'Numbers in range {node1} to {node2} :\n{tree.get_numbers_in_range(tree.root, node1, node2, [])}')
+    print(f'Numbers in range {node1} to {node2} :\n{tree.get_numbers_in_range(tree.root, node1, node2)}')
 
