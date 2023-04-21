@@ -347,16 +347,10 @@ class AVL:
         return False
     
     
-    # returns the smallest number compare to node
-    # by default uses the root
-    def smallest_element(self, node:Node=None):
+    # returns the smallest number from tree
+    def smallest_element(self):
         
-        curent = None
-
-        if node == None:
-            curent = self.root
-        else:
-            curent = node
+        curent = self.root
 
         while True:
 
@@ -366,16 +360,10 @@ class AVL:
                 return curent
 
 
-    # returns the biggest number compare to node
-    # by default uses the root
-    def biggest_element(self, node:Node=None):
+    # returns the biggest number from tree
+    def biggest_element(self):
         
-        curent = None
-
-        if node == None:
-            curent = self.root
-        else:
-            curent = node
+        curent = self.root
 
         while True:
 
@@ -383,6 +371,85 @@ class AVL:
                 curent = curent.right
             else:
                 return curent
+
+
+    def biggest_element_smaller_than(self, node:Node):
+        
+        curent = self.root
+
+        while curent and curent != node:
+            
+            # right subtree
+            if curent < node:
+                
+                # check if the next move is imposible
+                if curent.right == None:
+                    
+                    # check if the curent value is not ok
+                    if curent > node:
+
+                        # we search for the good value
+                        while curent > node:
+                            curent = curent.parent
+                    break
+                
+                # we iterate to the next node
+                curent = curent.right
+            
+            # left subtree
+            else:
+
+                # check if the next move is imposible
+                if curent.left == None:
+
+                    # check if the curent value is not ok
+                    if curent > node:
+
+                        # we search for the good value
+                        while curent > node:
+                            curent = curent.parent
+                        break
+                # we iterate to the next node
+                curent = curent.left
+        
+        return curent
+    
+
+    def smallest_element_bigger_than(self, node:Node):
+        
+        curent = self.root
+
+        while curent and curent != node:
+            
+            # right subtre
+            if curent < node:
+                
+                # check if the next move is imposible
+                if curent.right == None:
+
+                    # we search for the good value
+                    while curent < node:
+                        curent = curent.parent
+                    break
+
+                # we iterate to the next node
+                curent = curent.right
+            
+            # left subtree
+            else:
+
+                # check if the next move is imposible
+                if curent.left == None:
+
+                    # we search for the good value
+                    while curent < node:
+                        curent = curent.parent
+                    break
+
+                # we iterate to the next node
+                curent = curent.left
+        
+        return curent
 
 
     def remove(self, node:Node):

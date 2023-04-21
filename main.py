@@ -5,8 +5,8 @@ from random import random
 
 if __name__ == "__main__":
     tree = AVL()
-
-    nodes = [Node() for _ in range(15)]
+    keys = [26, 25, 24, 23, 20, 19, 18, 11, 9, 7, 6, 4, 3]
+    nodes = [Node(int(random() * 30)) for i in range(13)]
     for node in sorted(nodes, reverse=True):
         tree.insert(node)
         print(f"Inserted {node}, balanced: {tree.is_balanced()}")
@@ -27,7 +27,14 @@ if __name__ == "__main__":
 
     # print(tree.get_node(4))
 
-    print(tree.dfs(tree.root, []))
+    # print(tree.dfs(tree.root, []))
+    # print(tree.biggest_element())
+    # print(tree.smallest_element())
+    # print(tree.nodes)
+    node = Node(int(random() * 30)) 
+    print(node)
+    print(tree.biggest_element_smaller_than(node))
+    print(tree.smallest_element_bigger_than(node))
     # print(tree.numbers_in_range(tree.get_node(3), tree.get_node(14), []))
     # print(tree.dfs([]))
     

@@ -51,11 +51,18 @@ class Node:
     def __repr__(self):
         return str(self.key)
     
-
+    def __sub__(self, other):
+        if isinstance(other, Node):
+            return self.key - other.key
+    
     def __ge__(self, other):
         if isinstance(other, Node):
             return self.key >= other.key
     
+    def __gt__(self, other):
+        if isinstance(other, Node):
+            return self.key > other.key
+        
     def __lt__(self, other):
         if isinstance(other, Node):
             return self.key < other.key
