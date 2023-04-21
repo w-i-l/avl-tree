@@ -276,6 +276,7 @@ class AVL:
         print()
 
     
+    # prints the nodes in a tree version
     def display_tree(self):
 
         if len(self.nodes) == 0:
@@ -452,6 +453,8 @@ class AVL:
         return curent
 
 
+    # deletes the node
+    # raise an error if the node is not in
     def remove(self, node:Node):
         
         # the node is not in tree
@@ -536,6 +539,8 @@ class AVL:
         self.nodes.remove(node)
 
 
+    # returns the node for a given key
+    # or None
     def get_node(self, key:int):
         
         curent = self.root
@@ -553,6 +558,7 @@ class AVL:
         return None
 
 
+    # returns the nodes parsed with BFS
     def dfs(self, from_node:Node = None, nodes = []):
         
         curent_node = self.root
@@ -571,3 +577,51 @@ class AVL:
                 self.dfs(node, nodes)
 
         return nodes
+    
+
+    # returns a sorted list with nodes
+    # that fall in the given range
+    def get_numbers_in_range(self, curent_node:Node,from_node:Node, to_node:Node, nodes:list[Node] = []):
+        
+        
+        if curent_node == None:
+            return
+        
+        # dummy case
+        if curent_node == from_node and curent_node == to_node:
+            if curent_node not in nodes:
+                nodes.append(curent_node)
+            return
+
+        # check to see if we can iterate on both sides
+        if from_node <= curent_node <= to_node:
+            
+            # add to array
+            if curent_node not in nodes:
+                nodes.append(curent_node)
+
+            self.get_numbers_in_range(curent_node.left, from_node, to_node, nodes)
+            self.get_numbers_in_range(curent_node.right, from_node, to_node, nodes)
+        
+        # iterate only on the right side
+        elif curent_node < from_node:
+
+            # add to array
+            if from_node <= curent_node.right <= to_node and curent_node.right not in nodes:
+                nodes.append(curent_node.right)
+
+            self.get_numbers_in_range(curent_node.right, from_node, to_node, nodes)
+        
+        # iterate only on left side
+        elif curent_node > to_node:
+
+            # add to array
+            if from_node <= curent_node.left <= to_node and curent_node.left not in nodes:
+                nodes.append(curent_node.left)
+
+            self.get_numbers_in_range(curent_node.left, from_node, to_node, nodes)
+
+        return sorted(nodes)
+
+
+

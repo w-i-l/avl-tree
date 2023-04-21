@@ -10,6 +10,7 @@ class Node:
         self.parent = None
 
     
+    # returns the height of the node
     def _get_height(self, count=0):
         
         if self.right == None and self.left == None:
@@ -27,6 +28,7 @@ class Node:
         return max(left, right)
             
 
+    # returns the balance factor of the node
     def get_balance(self):
         
         if self.right == None and self.left == None:
@@ -47,7 +49,6 @@ class Node:
     def __str__(self):
         return str(self.key)
     
-
     def __repr__(self):
         return str(self.key)
     
